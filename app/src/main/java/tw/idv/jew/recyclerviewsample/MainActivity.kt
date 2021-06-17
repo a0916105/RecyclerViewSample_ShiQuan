@@ -11,6 +11,10 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.myTextView.text = "databinding.ActivityMainBinding"
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, MyFragment.newInstance())
+                .commitNow()
+        }
     }
 }
