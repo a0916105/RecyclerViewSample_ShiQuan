@@ -2,3 +2,4 @@ rootProject.name = "RecyclerViewSample"
 include ':app'
 include ':diffutil'
 include ':listadapter'
+include ':sortadapter'
