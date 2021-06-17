@@ -2,7 +2,10 @@ package tw.idv.jew.recyclerviewsample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import tw.idv.jew.recyclerviewsample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,13 +16,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val adapter = MyAdapter()
-        binding.recyclerView.layoutManager =
+        /*binding.recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = adapter
-        adapter.setData(genData())
+        adapter.setData(genData())*/
+        lifecycleScope.launch {
+            with(binding) {
+                recyclerView.layoutManager =
+                    LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+                recyclerView.adapter = adapter
+
+                adapter.setData(genData())
+                delay(1000)
+                adapter.setData(genData2())
+                delay(1000)
+                adapter.setData(genData())
+                delay(1000)
+                adapter.setData(genData2())
+                delay(1000)
+                adapter.setData(genData())
+            }
+        }
     }
 
     private fun genData() = (0..100).map {
         MyData(it, it.toString())
+    }
+
+    private fun genData2() = (0..100).map {
+        MyData(it * 2, (it * 2).toString())
     }
 }
